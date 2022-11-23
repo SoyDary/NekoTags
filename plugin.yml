@@ -1,0 +1,11 @@
+name: NekoTags
+main: com.github.SoyDary.NekoTags.NekoTags
+depend: [PlaceholderAPI]
+author: Dariela
+version: 1.0
+api-version: 1.17
+commands:
+   NekoTags:
+      description: Comando principal para las tags!
+      usage: /<command>
+      aliases: [tags, etiquetas]
