@@ -2,11 +2,8 @@ package com.github.SoyDary.NekoTags.Object;
 
 
 import java.util.HashMap;
-
 import org.bukkit.entity.Player;
-
 import com.github.SoyDary.NekoTags.NekoTags;
-
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PapiTags extends PlaceholderExpansion {
@@ -29,7 +26,7 @@ public class PapiTags extends PlaceholderExpansion {
 
     @Override
     public String getAuthor(){
-        return "FavioMC19";
+        return "SoyDary";
     }
    
     @Override
@@ -81,8 +78,12 @@ public class PapiTags extends PlaceholderExpansion {
     							return t.getTags().get(index);
     						}
     						
-    					}else {
-    						return t.getTag();
+    					}else {    						
+    						boolean color = false;
+    						if(id.split("_").length == 3) {
+    							color = Boolean.valueOf(id.split("_")[2].equalsIgnoreCase("color"));
+    						}
+    						return t.getTag(color);
     					}
     					
     				}
