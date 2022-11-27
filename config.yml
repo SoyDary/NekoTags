@@ -84,7 +84,7 @@ Tags:
     tag: '&#00ff80ᴘ&#66ffb3ᴀʀᴋᴏᴜʀ'
     description: " &fEtiqueta otorgada al completar \n &fel parkour &bDomo &f50 veces."
     item: light_weighted_pressure_plate
-    # Es necesario quitar la opción de abajo cuando se reemplacen todas las variables de %player_level% por una variable de parkour
+    # Es necesario quitar la opción de abajo cuando se reemplacen todas las variables de %player_level% por una variable de parkour.
     no_perm_hide: true
     extra_lore: |2-
 
