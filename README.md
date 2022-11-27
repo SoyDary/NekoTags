@@ -10,12 +10,12 @@
 > /tags select `<tag>` 
 
 
-> **Admin:** `(nekotags.admin)`
->
->
+**Comandos de admin:** `(nekotags.admin)`
 > /tags give `<user>` `<tag>`
 >
 > /tags remove `<user>` `<tag>`
 >
 > /tags list `<user>` `<tag>`
+>
+> /tags reload
 
