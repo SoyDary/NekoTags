@@ -108,7 +108,7 @@ public class Gui implements InventoryHolder {
 						lore.add(PlaceholderAPI.setPlaceholders(p, plugin.getUtils().color(text)));
 					}
 				}else {
-					if(p.hasPermission("nekotags.tag."+tag.getKey())) {
+					if(plugin.getData().hasTag(p, tag.getKey())) { 
 						for(String text : plugin.getConfig().getStringList("GUI.allowed_lore")) {
 							lore.add(PlaceholderAPI.setPlaceholders(p, plugin.getUtils().color(text)));
 						}
@@ -143,7 +143,7 @@ public class Gui implements InventoryHolder {
 				meta.setLore(lore);
 				meta.setLocalizedName(key);
 				item.setItemMeta(meta);
-				if(tag.hideNoPerm() && (!p.hasPermission("nekotags.tag."+tag.getKey()))) {
+				if(tag.hideNoPerm() && (!plugin.getData().hasTag(p, tag.getKey()))) {
 					continue;
 				}
 				page.setItem(start, item);

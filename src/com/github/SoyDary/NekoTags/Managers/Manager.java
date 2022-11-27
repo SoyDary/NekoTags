@@ -51,7 +51,7 @@ public class Manager {
 			tags.put(key, t);
 			guisWithOrder.add(t);
 		}
-		plugin.getServer().getConsoleSender().sendMessage(plugin.getUtils().color("&8[&dNeko&eTags&8] &eSe han cargado &d"+keys.size()+"&e tags en el servidor!"));
+		plugin.getServer().getConsoleSender().sendMessage(plugin.getUtils().color(plugin.prefix+" &eSe han cargado &d"+keys.size()+"&e tags en el servidor!"));
 		//startAnimationsTask(); XD
 	}
 	

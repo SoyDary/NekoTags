@@ -35,14 +35,18 @@ Tags:
   creativo:
     name: Creativo
     tag: '&3&ki&#99ffffᴄʀᴇᴀᴛɪᴠᴏ&#d2a679&#33ccff🪓&3&ki'
-    description: " &fEtiqueta conseguida al completar 240 horas\n &fjugadas en creativo (10 días)."
+    description: |2-
+       &fEtiqueta conseguida al completar 240 horas
+       &fjugadas en creativo (10 días).
     item: wooden_axe
     selected_item: golden_axe
-    extra_lore: "\n &f&lTiempo jugado: &a%statistic_time_played% %changeoutput_>=_input:{statistic_time_played}_matcher:240_ifmatch:&#ccff99(Clic para desblquear)_else:%"
+    extra_lore: |2-
+
+       &f&lTiempo jugado: &a%statistic_time_played% %changeoutput_>=_input:{statistic_time_played}_matcher:240_ifmatch:&#ccff99(Clic para desblquear)_else:%
     no_perm_action:
       condition: '%statistic_hours_played% >= 240'
       functions:
-      - '[console] lp user %player_name% permission set nekotags.tag.creativo'
+      - '[console] tags give %player_name% creativo'
       - '[message] Desbloqueaste la etiqueta %nekotags_tag_creativo%'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -52,46 +56,55 @@ Tags:
   kriptonpvp:
     name: KriptonPvP
     tag: '&#ff6666&ki&#ff1a1a&nᴋ&#0080ff&nᴘ&#809fff&ki'
-    description: " &fEtiqueta solo para los capitos kriptonianos."
+    description: ' &fEtiqueta solo para los capitos kriptonianos.'
     item: head-DavidBasketYT
-    extra_lore: "\n &f&lPrecio: &a⛃2,500 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃2,500 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 2500'
       functions:
       - '[console] eco take %player_name% 2500'
-      - '[console] lp user %player_name% permission set nekotags.tag.kriptonpvp'
-      - '[message] Compraste la etiqueta %nekotags_tag_kriptonpvp% &fpor &a⛃2,500 KripCoins'
+      - '[console] tags give %player_name% kriptonpvp'
+      - '[message] Compraste la etiqueta %nekotags_tag_kriptonpvp% &fpor &a⛃2,500
+        KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
       - '[message] &cNecesitas &a⛃2,500 KripCoins &cpara poder desbloquear esto.'
-      - '[closeinventory]'  
+      - '[closeinventory]'
   tematica-1:
     name: Primer lugar
     tag: '&#ffff00&L〈&e♯1 &#ffbf00☆&#ffff00&l〉'
-    description: " &fEtiqueta otorgada al ganar el primer puesto\n &fen una &b/temática &fde construccíon."
+    description: |2-
+       &fEtiqueta otorgada al ganar el primer puesto
+       &fen una &b/temática &fde construccíon.
     item: golden_apple
   parkour:
     name: Parkour
     tag: '&#00ff80ᴘ&#66ffb3ᴀʀᴋᴏᴜʀ'
     description: " &fEtiqueta otorgada al completar \n &fel parkour &bDomo &f50 veces."
     item: light_weighted_pressure_plate
-    #Es necesario quitar la opción de abajo cuando se reemplacen todas las variables de %player_level% por una variable de parkour
+    # Es necesario quitar la opción de abajo cuando se reemplacen todas las variables de %player_level% por una variable de parkour
     no_perm_hide: true
-    extra_lore: "\n &f&lProgreso: &a%player_level%&2/&a50 %changeoutput_>=_input:{player_level}_matcher:50_ifmatch:&#ccff99(Clic para desblquear)_else:%"
+    extra_lore: |2-
+
+       &f&lProgreso: &a%player_level%&2/&a50 %changeoutput_>=_input:{player_level}_matcher:50_ifmatch:&#ccff99(Clic para desblquear)_else:%
     no_perm_action:
       condition: '%player_level% >= 50'
       functions:
-      - '[console] lp user %player_name% permission set nekotags.tag.parkour'
+      - '[console] tags give %player_name% parkour'
       - '[message] Desbloqueaste la etiqueta %nekotags_tag_parkour%'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
       - '[message] &cAún no puedes reclamar esta etiqueta.'
       - '[closeinventory]'
-      
+  
   vip:
     name: VIP
     tag: '&e&ki&#ffcc33ᴠ&#ffff99ɪ&#ffcc33ᴘ&e&ki '
-    description: " &fEtiqueta disponible al comprar cualquier\n &frango en &b&nhttps://tienda.kriptonpvp.com"
+    description: |2-
+       &fEtiqueta disponible al comprar cualquier
+       &frango en &b&nhttps://tienda.kriptonpvp.com
     item: diamond
   booster:
     name: Booster
@@ -101,19 +114,23 @@ Tags:
   navidad:
     name: Navidad
     tag: '&#ff3333&lɴ&f&lᴀ&#ff3333&lᴠ&f&lɪ&#ff3333&lᴅ&f&lᴀ&#ff3333&lᴅ'
-    description: " &#ccff99Etiqueta exclusiva conseguida durante\n &#ccff99un evento navieño."
+    description: |2-
+       &#ccff99Etiqueta exclusiva conseguida durante
+       &#ccff99un evento navieño.
     item: fern
   argentina:
     name: Argentina
     tag: '&#74ACDFᴀ&fʀ&#74ACDFɢ'
     item: head-f6d033dc5f675ad51bc06c7a1949c35a1d37e48a2e1c2789c2cf7d30ec58f32c
     description: ' &fEtiqueta de la nacionalidad Argentina.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.argentina'
+      - '[console] tags give %player_name% argentina'
       - '[message] Compraste la etiqueta %nekotags_tag_argentina% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -124,12 +141,14 @@ Tags:
     tag: '&#0039A6ᴄ&fʜ&#D72B1Fʟ'
     item: head-2111e802422b539292f1f92b3833edfd65138608594aaab4acb322077c36587b
     description: ' &fEtiqueta de la nacionalidad Chilena.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.chile'
+      - '[console] tags give %player_name% chile'
       - '[message] Compraste la etiqueta %nekotags_tag_chile% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -140,12 +159,14 @@ Tags:
     tag: '&fᴜ&#0038A8ʀ&fᴜ'
     item: head-28440597c4bc2aad600a54604dc7b1fb771343e022e6a2e022f90e40cc25f9f8
     description: ' &fEtiqueta de la nacionalidad Uruguaya.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.uruguay'
+      - '[console] tags give %player_name% uruguay'
       - '[message] Compraste la etiqueta %nekotags_tag_uruguay% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -156,12 +177,14 @@ Tags:
     tag: '&#D52B1Eᴘ&Fᴀ&#0038A8ʀ'
     item: head-8178de691b508d6249109fc54af6fba49baa8377ad370612ed617d77dd6ad588
     description: ' &fEtiqueta de la nacionalidad Paraguaya.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.paraguay'
+      - '[console] tags give %player_name% paraguay'
       - '[message] Compraste la etiqueta %nekotags_tag_paraguay% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -172,12 +195,14 @@ Tags:
     tag: '&#3C3B6Eᴜ&Fꜱ&#B22234ᴀ'
     item: head-4cac9774da1217248532ce147f7831f67a12fdcca1cf0cb4b3848de6bc94b4
     description: ' &fEtiqueta de la nacionalidad Estadounidense.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.estadosunidos'
+      - '[console] tags give %player_name% estadosunidos'
       - '[message] Compraste la etiqueta %nekotags_tag_estadosunidos% &fpor &a⛃150
         KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
@@ -189,12 +214,14 @@ Tags:
     tag: '&#D52B1Eʙ&#F9E300ᴏ&#007934ʟ'
     item: head-fd2c9f98618cd5f7dbf0c1a54ee09474662b713b5aa265c85efbfc46418e915
     description: ' &fEtiqueta de la nacionalidad Boliviana.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.bolivia'
+      - '[console] tags give %player_name% bolivia'
       - '[message] Compraste la etiqueta %nekotags_tag_bolivia% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -205,12 +232,14 @@ Tags:
     tag: '&#006847ᴍ&fx&#CE1126ɴ'
     item: head-ca971bfcf33b439821b4e5f0c86cd61435cd3e0c819e35dd9774ef0399f132b
     description: ' &fEtiqueta de la nacionalidad Mexicana.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.mexico'
+      - '[console] tags give %player_name% mexico'
       - '[message] Compraste la etiqueta %nekotags_tag_mexico% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -221,12 +250,14 @@ Tags:
     tag: '&#009C37ʙ&#FEE000ʀ&#009C37ᴀ'
     item: head-9a46475d5dcc815f6c5f2859edbb10611f3e861c0eb14f088161b3c0ccb2b0d9
     description: ' &fEtiqueta de la nacionalidad Brasileña.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.brasil'
+      - '[console] tags give %player_name% brasil'
       - '[message] Compraste la etiqueta %nekotags_tag_brasil% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -237,12 +268,14 @@ Tags:
     tag: '&#e60000ᴇ&#FABD00ꜱ&#e60000ᴘ'
     item: head-32bd4521983309e0ad76c1ee29874287957ec3d96f8d889324da8c887e485ea8
     description: ' &fEtiqueta de la nacionalidad Española.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.espania'
+      - '[console] tags give %player_name% espania'
       - '[message] Compraste la etiqueta %nekotags_tag_espania% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -253,12 +286,14 @@ Tags:
     tag: '&#D91023ᴘ&fᴇ&#D91023ʀ'
     item: head-24d03bd4410babdc682493b3c2bba26e730e6bc658d3888e79bf712f853
     description: ' &fEtiqueta de la nacionalidad Peruana.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.peru'
+      - '[console] tags give %player_name% peru'
       - '[message] Compraste la etiqueta %nekotags_tag_peru% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -269,12 +304,14 @@ Tags:
     tag: '&#FFDD00ᴇ&#034EA2ᴄ&#ED1C24ᴜ'
     item: head-72869b55a401c87fb93c36a2d2e74ea4dd722542ab0fc3c0dbf9511773251455
     description: ' &fEtiqueta de la nacionalidad Ecuatoriana.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.ecuador'
+      - '[console] tags give %player_name% ecuador'
       - '[message] Compraste la etiqueta %nekotags_tag_ecuador% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -285,12 +322,14 @@ Tags:
     tag: '&#FFCD00ᴄ&#003087ᴏ&#C8102Eʟ'
     item: head-c72120b9fe77d770b254b39c7be9b1ceccef6adfe7a5cc689ab1fd23e3c
     description: ' &fEtiqueta de la nacionalidad Colombiana.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.colombia'
+      - '[console] tags give %player_name% colombia'
       - '[message] Compraste la etiqueta %nekotags_tag_colombia% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -301,12 +340,14 @@ Tags:
     tag: '&#FFCC00ᴠ&#00247Dɴ&#CF142Bᴢ'
     item: head-e3033049baae11877406da40bd0517cbfb2b37a2398be3bda4995b61ffeaa243
     description: ' &fEtiqueta de la nacionalidad Venezolana.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.venezuela'
+      - '[console] tags give %player_name% venezuela'
       - '[message] Compraste la etiqueta %nekotags_tag_venezuela% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -317,12 +358,14 @@ Tags:
     tag: '&#072357ᴘ&fᴀ&#DA121Aɴ'
     item: head-24b8da83a85f11eb74e76084a6d64084a3dd5dacaa3a9721e3af2cad88eef7
     description: ' &fEtiqueta de la nacionalidad Panameña.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.panama'
+      - '[console] tags give %player_name% panama'
       - '[message] Compraste la etiqueta %nekotags_tag_panama% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -333,12 +376,14 @@ Tags:
     tag: '&#002B7Fᴄ&fʀ&#CE1126ᴀ'
     item: head-7914ef5242dd34bebaf9de5cf199eb8854fcff4f7c5869d2382331d40b5eea74
     description: ' &fEtiqueta de la nacionalidad Costarricense.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.costarica'
+      - '[console] tags give %player_name% costarica'
       - '[message] Compraste la etiqueta %nekotags_tag_costarica% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -349,12 +394,14 @@ Tags:
     tag: '&#0067C6ɴ&fɪ&#0067C6ᴄ'
     item: head-8ff9b90bf3df91a47c78215aae1d07d58999aa229a2563ec3e28753c47df1309
     description: ' &fEtiqueta de la nacionalidad Nicaragüense.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.nicaragua'
+      - '[console] tags give %player_name% nicaragua'
       - '[message] Compraste la etiqueta %nekotags_tag_nicaragua% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -365,12 +412,14 @@ Tags:
     tag: '&#0047ABᴇ&fꜱ&#0047ABᴠ'
     item: head-d97fd6082103704dc3c205d2bc556e97abea8de1d619944f08d0bbcafaecf10c
     description: ' &fEtiqueta de la nacionalidad Salvadoreña.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.elsalvador'
+      - '[console] tags give %player_name% elsalvador'
       - '[message] Compraste la etiqueta %nekotags_tag_elsalvador% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -381,12 +430,14 @@ Tags:
     tag: '&#4997D0ɢ&fᴜ&#4997D0ᴀ'
     item: head-608a691767cff645359861340cb860cba7c498042204579f96d065bcebdfce94
     description: ' &fEtiqueta de la nacionalidad Guatemalteca.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.guatemala'
+      - '[console] tags give %player_name% guatemala'
       - '[message] Compraste la etiqueta %nekotags_tag_guatemala% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
@@ -397,21 +448,25 @@ Tags:
     tag: '&#CB1515ᴄ&#002A8Fᴜ&fʙ'
     item: head-d39382ddd4845b46196f5434de9e8287f929471dad573dcb04fb0f858720307b
     description: ' &fEtiqueta de la nacionalidad Cubana.'
-    extra_lore: "\n &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)"
+    extra_lore: |2-
+
+       &f&lPrecio: &a⛃150 &#ccff99(Clic para desblquear)
     no_perm_action:
       condition: '%vault_eco_balance_fixed% >= 150'
       functions:
       - '[console] eco take %player_name% 150'
-      - '[console] lp user %player_name% permission set nekotags.tag.cuba'
+      - '[console] tags give %player_name% cuba'
       - '[message] Compraste la etiqueta %nekotags_tag_cuba% &fpor &a⛃150 KripCoins'
       - '[sound] ENTITY_PLAYER_LEVELUP'
       deny_functions:
       - '[message] &cNecesitas &a⛃150 KripCoins &cpara poder desbloquear esto.'
       - '[closeinventory]'
   miau:
-    name: "&eGatoooo"
+    name: '&eGatoooo'
     tag: '&#ffcc00៱&#ffff80˳.˳&#ffcc00៱'
     item: salmon
     selected_item: cooked_salmon
-    description: " &#ffb3ffPrueba de etiqueta solo visible con el\n &#ffb3ffpermiso &dnekotags.tag.miau"
+    description: |2-
+       &#ffb3ffPrueba de etiqueta solo visible con el
+       &#ffb3ffpermiso &dnekotags.tag.miau
     no_perm_hide: true

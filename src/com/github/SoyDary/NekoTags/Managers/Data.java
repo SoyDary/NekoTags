@@ -15,33 +15,52 @@ import org.bukkit.inventory.ItemStack;
 
 import com.github.SoyDary.NekoTags.NekoTags;
 
-public class Data {
+	public class Data {	
+	
 	NekoTags plugin;
 	public Map<Player, ItemStack> offhandItems;
-	
+	public Map<String, FileConfiguration> configs;
+		
 	public Data(NekoTags plugin) {
-		this.plugin = plugin;
 		this.offhandItems = new HashMap<Player, ItemStack>();
+		this.configs = new HashMap<String, FileConfiguration>();
+		this.plugin = plugin;
 	}
-	
-	public Map<String, FileConfiguration> configs = new HashMap<String, FileConfiguration>();
 	
 	public String getTag(String uuid) {
 		FileConfiguration config = getConfiguration(uuid);
-		if(config.getString(uuid) != null)
-			return config.getString(uuid);
+		if(config.getString("selected") != null)
+			return config.getString("selected");
 		
 		return null;
 	}
 	
 	public void setTag(String uuid, String tag) {
 		FileConfiguration config = getConfiguration(uuid);
-		config.set(uuid, tag);
+		config.set("selected", tag);
+		saveConfig(uuid);
+	}
+	
+	public void addTag(String uuid, String tag) {
+		FileConfiguration config = getConfiguration(uuid);
+		List<String> tags = getTags(uuid);
+		if(!tags.contains(tag))
+			tags.add(tag);
+		config.set("Tags", tags);
+		saveConfig(uuid);
+	}
+	
+	public void removeTag(String uuid, String tag) {
+		FileConfiguration config = getConfiguration(uuid);
+		List<String> tags = getTags(uuid);
+		if(tags.contains(tag))
+			tags.remove(tag);
+		config.set("Tags", tags);
 		saveConfig(uuid);
 	}
 	
 	public void saveConfig(String uuid) {
-		File file = new File("plugins/NekoTags/data.yml");
+		File file = new File("plugins/NekoTags/Players/"+uuid+".yml");
 		FileConfiguration config = configs.getOrDefault(uuid, YamlConfiguration.loadConfiguration(file));
 		try {
 			config.save(file);
@@ -52,19 +71,24 @@ public class Data {
 	}
 	
 	public FileConfiguration getConfiguration(String uuid) {
-		File file = new File("plugins/NekoTags/data.yml");
+		File file = new File("plugins/NekoTags/Players/"+uuid+".yml");
 		FileConfiguration config = configs.getOrDefault(uuid, YamlConfiguration.loadConfiguration(file));
 		configs.put(uuid, config);
 		return config;
 	}
-	public List<String> getTags(Player p) {
-		List<String> tags = new ArrayList<String>();
-		for(String str : plugin.getManager().getTags().keySet()) {
-			if(!p.hasPermission("nekotags.tag."+str)) continue;
-			tags.add(str);
-		}
+	
+	public Boolean hasTag(Player p, String tag) {
+		if(p.hasPermission("nekotags.tag."+tag)) return true;
+		List<String> tags = getTags(p.getUniqueId().toString());
+		return tags.contains(tag);
+	}
+	
+	public List<String> getTags(String uuid){
+		FileConfiguration config = getConfiguration(uuid);
+		List<String> tags = config.getStringList("Tags");
+		if(tags == null)
+			tags = new ArrayList<String>();
 		return tags;
-		
 	}
 	public void checkCurrentTag(Player p) {  	   	
 		Bukkit.getScheduler().runTaskAsynchronously(plugin, (Runnable)new Runnable() {
@@ -72,12 +96,13 @@ public class Data {
             public void run() {
             	String tag = plugin.getData().getTag(p.getUniqueId().toString());
             	if(tag == null) return;
-            	if(!p.hasPermission("nekotags.tag."+tag)) {
-            		plugin.getData().setTag(p.getUniqueId().toString(), null);
+            	if(!hasTag(p, tag)) {
+            		removeTag(p.getUniqueId().toString(), tag);
+            		setTag(p.getUniqueId().toString(), null);
             	}
             }
         });	
 	}
-	
 
 }
+

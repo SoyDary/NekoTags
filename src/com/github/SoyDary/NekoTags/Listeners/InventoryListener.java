@@ -54,8 +54,8 @@ public class InventoryListener implements Listener{
 						p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 5, 1);
 					}
 					
-				}else if(plugin.getManager().getTags().containsKey(item.getItemMeta().getLocalizedName())){
-					if(p.hasPermission("nekotags.tag."+loc)) {
+				}else if(plugin.getManager().getTags().containsKey(loc)){
+					if(plugin.getData().hasTag(p, loc)) {
 						if(!loc.equals(tag)) {
 							plugin.getData().setTag(p.getUniqueId().toString(), loc);
 							p.playSound(p.getLocation(), Sound.UI_BUTTON_CLICK, 5, 1);
@@ -117,10 +117,9 @@ public class InventoryListener implements Listener{
 	
 	public boolean isMenu(InventoryHolder holder) {
 		if(holder instanceof Gui) return true;
-		return false;
-		
-		
+		return false;		
 	}
+
 	
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event) {

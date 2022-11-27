@@ -21,6 +21,7 @@ public class NekoTags extends JavaPlugin{
 	Commands commands;
 	Data data;
 	ConditionsManager conditionsmanager;
+	public String prefix = "&#a64dff[&#ffb3ffNeko&#ffe699Tags&#a64dff]";
 	
 	public void onEnable() {
 		getServer().getConsoleSender().sendMessage("[NekoTags] plugin activado!");
