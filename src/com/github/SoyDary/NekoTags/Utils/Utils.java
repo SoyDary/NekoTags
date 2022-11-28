@@ -48,7 +48,8 @@ public class Utils {
 
 	
 	public String getSkinID(Player p) {
-		PlayerProfile profile = p.getPlayerProfile();  
+		PlayerProfile profile = p.getPlayerProfile(); 
+		if(!profile.hasTextures()) return null;
         String id = new String(profile.getTextures().getSkin().toString()).split("texture/")[1];
         return id;    
     }
