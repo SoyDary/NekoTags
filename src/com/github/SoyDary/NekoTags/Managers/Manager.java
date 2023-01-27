@@ -14,16 +14,12 @@ public class Manager {
 	private HashMap<String, Tag> tags;
 	public HashMap<Player, Gui> guis;
 	public ArrayList<Tag> guisWithOrder;
-	private HashMap<Player, HashMap<String, Integer>> animationsCount;
-	private HashMap<Player, HashMap<String, Integer>> repeatCount;
 	
 	public Manager(NekoTags plugin) {
 		this.plugin = plugin;
 		tags = new HashMap<String, Tag>();
 		guis = new HashMap<Player, Gui>();
 		guisWithOrder = new ArrayList<Tag>();
-	    animationsCount = new HashMap<Player, HashMap<String, Integer>>();
-	    repeatCount = new HashMap<Player, HashMap<String, Integer>>();
 	}
 	
 	public void loadTags() {
@@ -52,35 +48,8 @@ public class Manager {
 			guisWithOrder.add(t);
 		}
 		plugin.getServer().getConsoleSender().sendMessage(plugin.getUtils().color(plugin.prefix+" &eSe han cargado &d"+keys.size()+"&e tags en el servidor!"));
-		//startAnimationsTask(); XD
 	}
 	
-	private String getTag(Player p, Tag t) {
-		if(t.hasMultiTags()) {
-			HashMap<String, Integer> cache = animationsCount.getOrDefault(p, new HashMap<String, Integer>());
-			HashMap<String, Integer> repeatCache = repeatCount.getOrDefault(p, new HashMap<String, Integer>());
-			int index = cache.getOrDefault(t.getKey(), 0);
-			int count = repeatCache.getOrDefault(t.getKey(), t.getRepeatFrame());
-			if(count > 1) {
-				repeatCache.put(t.getKey(), count-1);
-				repeatCount.put(p, repeatCache);
-				return t.getTags().get(index);
-			}else {
-				if(index == t.getTags().size()-1) {
-					cache.put(t.getKey(), 0);
-				}else {
-					cache.put(t.getKey(), index+1);
-				}
-				animationsCount.put(p, cache);
-				repeatCache.remove(t.getKey());
-				repeatCount.put(p, repeatCache);
-				return t.getTags().get(index);
-			}
-			
-		}else {
-			return t.getTag();
-		}
-	}
 
 	public HashMap<String, Tag> getTags(){
 		return this.tags;

@@ -78,12 +78,14 @@ public class PapiTags extends PlaceholderExpansion {
     							return t.getTags().get(index);
     						}
     						
-    					}else {    						
+    					}else {
+    						/*
     						boolean color = false;
     						if(id.split("_").length == 3) {
     							color = Boolean.valueOf(id.split("_")[2].equalsIgnoreCase("color"));
     						}
-    						return t.getTag(color);
+    						*/
+    						return t.getTag();
     					}
     					
     				}

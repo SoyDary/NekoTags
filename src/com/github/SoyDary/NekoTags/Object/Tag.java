@@ -111,31 +111,34 @@ public class Tag {
 	}
 	
 	public String getDescription() {
-		return plugin.getUtils().color(this.description);
+		return description;
 	}
 	
 	public String getTag() {
-		return plugin.getUtils().color(this.tag);
+		return tag;
 	}
-	
+	/*
 	public String getTag(Boolean color) {
 		return color ? plugin.getUtils().color(this.tag) : tag;
 	}
+	*/
 	
 	public List<String> getTags(){
-		return plugin.getUtils().color(tags);
+		return tags;
 	}
 	
+	/*
 	public List<String> getTags(Boolean color){
 		return color ?  plugin.getUtils().color(tags) : tags;
 	}
+	*/
 	
 	public List<String> getFunctions(){
-		return plugin.getUtils().color(this.functions);
+		return functions;
 	}
 	
 	public List<String> getDenyFunctions(){
-		return plugin.getUtils().color(this.denyFunctions);
+		return denyFunctions;
 	}
 	
 	public String getCondition() {

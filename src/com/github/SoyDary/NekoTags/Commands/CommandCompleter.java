@@ -3,6 +3,7 @@ package com.github.SoyDary.NekoTags.Commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -36,9 +37,8 @@ public class CommandCompleter implements TabCompleter {
 			
 		}
 		if (a.length == 2) {
-			if(!(s instanceof Player)) return null;
-			Player p = (Player) s;
-			if(a[0].equalsIgnoreCase("select")) {
+			if(!(s instanceof Player p)) return null;
+			if(a[0].equalsIgnoreCase("select")) {			
 		        List<String> commandsList = new ArrayList<>();
 		        List<String> preCommands = new ArrayList<>();
 		        preCommands = plugin.getData().getTags(p.getUniqueId().toString());
@@ -50,12 +50,12 @@ public class CommandCompleter implements TabCompleter {
 			}			
 		}
 		if (a.length == 3) {
-			if(!(s instanceof Player)) return null;
-			Player p = (Player) s;
+			OfflinePlayer of = plugin.getUtils().getUser(a[1]);
+			if(of == null) return null;
 			if(a[0].equalsIgnoreCase("give")) {
 		        List<String> commandsList = new ArrayList<>();
 		        List<String> preCommands = new ArrayList<>();
-		        List<String > tags = plugin.getData().getTags(p.getUniqueId().toString());
+		        List<String > tags = plugin.getData().getTags(of.getUniqueId().toString());
 		        for(String t : plugin.getManager().getTags().keySet()) {
 		        	if(!tags.contains(t)) commandsList.add(t);
 		        }
@@ -68,7 +68,7 @@ public class CommandCompleter implements TabCompleter {
 			if(a[0].equalsIgnoreCase("remove")) {
 		        List<String> commandsList = new ArrayList<>();
 		        List<String> preCommands = new ArrayList<>();
-		        List<String > tags = plugin.getData().getTags(p.getUniqueId().toString());
+		        List<String > tags = plugin.getData().getTags(of.getUniqueId().toString());
 		        for(String t : plugin.getManager().getTags().keySet()) {
 		        	if(tags.contains(t)) commandsList.add(t);
 		        }

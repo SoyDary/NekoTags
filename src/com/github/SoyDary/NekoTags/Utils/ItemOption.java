@@ -3,6 +3,8 @@ package com.github.SoyDary.NekoTags.Utils;
 import com.github.SoyDary.NekoTags.NekoTags;
 import com.google.common.collect.Lists;
 
+import net.kyori.adventure.text.Component;
+
 import org.bukkit.Bukkit;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -19,7 +21,7 @@ public class ItemOption {
     private final ItemMeta meta;
     public NekoTags plugin = NekoTags.getInstance();
     
-    protected ItemOption(ItemStackBuilder builder) {
+    public ItemOption(ItemStackBuilder builder) {
         this.builder = builder;
         this.is = builder.build();
         if(is.getItemMeta() == null) {
@@ -29,7 +31,7 @@ public class ItemOption {
     }
 
     public ItemOption setTitle(String s) {
-        meta.setDisplayName(plugin.getUtils().color(s));
+        meta.displayName(plugin.getUtils().color(s));
         verify();
         return this;
     }
@@ -40,26 +42,26 @@ public class ItemOption {
     	return this;
     }
 
-    public ItemOption setLore(String... s) {
+    public ItemOption setLore(Component... s) {
         setLore(Arrays.asList(s));
         return this;
     }
 
-    public ItemOption setLore(List<String> lores) {
-        meta.setLore(plugin.getUtils().color(lores));
+    public ItemOption setLore(List<Component> lores) {
+        meta.lore(lores);
         verify();
         return this;
     }
 
     public ItemOption addLoreLine(String s) {
-        List<String> lore = meta.getLore() == null ? Lists.newArrayList() : meta.getLore();
+        List<Component> lore = meta.lore() == null ? Lists.newArrayList() : meta.lore();
         lore.add(plugin.getUtils().color(s));
         setLore(lore);
         return this;
     }
 
     public ItemOption clearLoreLine(int index) {
-        List<String> lore = meta.getLore();
+        List<Component> lore = meta.lore();
         lore.remove(index);
         setLore(lore);
         return this;

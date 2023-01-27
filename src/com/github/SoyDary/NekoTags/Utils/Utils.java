@@ -3,49 +3,99 @@ package com.github.SoyDary.NekoTags.Utils;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.command.CommandSender;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
-import org.bukkit.profile.PlayerTextures;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.destroystokyo.paper.profile.ProfileProperty;
+import com.earth2me.essentials.User;
 import com.github.SoyDary.NekoTags.NekoTags;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.md_5.bungee.api.ChatColor;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TextReplacementConfig;
+import net.kyori.adventure.text.format.TextDecoration;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 
 public class Utils {
 	NekoTags plugin;
+	LegacyComponentSerializer lcs;
+	TextReplacementConfig italic;
 
 	public Utils(NekoTags plugin) {
+		this.lcs = LegacyComponentSerializer.builder().character('&').hexCharacter('#').extractUrls().build();
+		this.italic = TextReplacementConfig.builder().match("&<ITALITC> ").replacement("").build();
 		this.plugin = plugin;
 	}
 	
-	public static int spigotv;
-	public void sendMessage(CommandSender s, String message) {
-		s.sendMessage(color(message));
-	}
 
+	public Component color(String text) {
+		if(text == null) return Component.text("");
+		text = fixColors(text);
+		if(text.split(" ").length > 1 && text.split(" ")[0].contains("&o")) text = text.replaceAll("&o", "&<ITALITC> &o");
+		return lcs.deserialize(text).decoration(TextDecoration.ITALIC, false).replaceText(italic);
+
+	}
+	
+	public OfflinePlayer getUser(String str) {	
+		if(str == null || str.equals("")) return null;
+		for(Player p : Bukkit.getOnlinePlayers()) {
+			if(p.getName().equalsIgnoreCase(str)) return Bukkit.getOfflinePlayer(p.getUniqueId());
+		}
+		OfflinePlayer of = Bukkit.getOfflinePlayer(str);
+		if(plugin.essentials == null && !of.hasPlayedBefore()) {
+			return of;
+		}
+		
+		if(str.length() == 36) {
+			User user = plugin.essentials.getUser(UUID.fromString(str));
+			if(user != null) {
+				return Bukkit.getPlayer(user.getUUID());
+			}
+		}
+		User user = plugin.essentials.getUser(str);
+		if(user != null) {
+			return Bukkit.getOfflinePlayer(user.getUUID());
+		}
+		return null;
+		
+	}
+	
+	
+	
+	public String fixColors(String text) {
+		return 	text = text
+					.replaceAll("&A", "&a")
+					.replaceAll("&B", "&b")
+					.replaceAll("&C", "&c")
+					.replaceAll("&D", "&d")
+					.replaceAll("&E", "&e")
+					.replaceAll("&F", "&f")
+					.replaceAll("&L", "&l")
+					.replaceAll("&M", "&m")
+					.replaceAll("&N", "&n")
+					.replaceAll("&O", "&o")
+					.replaceAll("&K", "&K");
+	}
+	
+	public List<Component> color(List<String> list) {
+		List<Component> components = new ArrayList<Component>();
+		for(String str : list) {
+			components.add(color(str));
+		}
+		return components;	
+	}
 	
 	public String getSkinID(Player p) {
 		PlayerProfile profile = p.getPlayerProfile(); 
@@ -114,179 +164,10 @@ public class Utils {
 		}
 	}
 
-	private final Pattern pattern = Pattern.compile("(?<!\\\\)(#[a-fA-F0-9]{6})");
-
 	public String addChar(String str, String ch, int position) {
 	    return str.substring(0, position) + ch + str.substring(position);
 	}
-
-	public String parseColor(String text) {
-		if(text.length() == 0 | text == null || text.length() < 7) {
-			return text;
-		}
-		
-		String tedit = text;
-		String text2 = text;
-		for(int i = text2.length()-1; i > 0; i--) {
-			String c = text2.charAt(i)+"";
-			
-			if(c.contains("#") && i-1 < 0 && text2.length() >= 7) {
-				String color = c+text2.charAt(i+1)+text2.charAt(i+2)+text2.charAt(i+3)+text2.charAt(i+4)+text2.charAt(i+5)+text2.charAt(i+6);
-				if(isColor(color)) {
-					tedit = addChar(text2, "&", i);
-				}
-			}else {
-				if(c.contains("#") && i-1 > 0 && i+6 <= text2.length()-1) {
-					String color = c+text2.charAt(i+1)+text2.charAt(i+2)+text2.charAt(i+3)+text2.charAt(i+4)+text2.charAt(i+5)+text2.charAt(i+6);
-					if(isColor(color) && !(text2.charAt(i-1)+"").contains("&")) {
-						tedit = addChar(text2, "&", i);
-					}
-				}
-			}
-		}
-		return tedit;
-	}
-
-
-	public String color(String text) {
-		String end = "";
-		if(text == null || text == "") {
-			return "";
-		}
-		String text2 = parseColor(text);
-		
-		String[] words = text2.split(Pattern.quote("&#"));
-		if(words.length != 0) {
-			int count = 0;
-			for(String t : words) {
-				String more = "";
-				if(count != 0) {
-					more = "#";
-				}
-				String t2 = t;
-				t2 = normalColor(t2);
-				t2 = HexColor(more+t2);
-				t2 = color2(t2);
-				end += t2;
-				count++;
-			}
-			return end;
-		}else {
-			return text;
-		}
-		
-	}
-	
-	private String color2(String text) {
-		String end = "";
-		if(text == null || text == "") {
-			return "";
-		}
-		String text2 = parseColor(text);
-		
-		String[] words = text2.split(Pattern.quote("#"));
-		if(words.length != 0) {
-			int count = 0;
-			for(String t : words) {
-				String more = "";
-				if(count != 0) {
-					more = "#";
-				}
-				String t2 = t;
-				t2 = normalColor(t2);
-				t2 = HexColor(more+t2);
-				end += t2;
-				count++;
-			}
-			return end;
-		}else {
-			return text;
-		}
-		
-	}
-
-	private ArrayList<String> normalColors = new ArrayList<String>();
-
-	public ArrayList<String>  normalsColor(){
-		return normalColors;
-	}
-
-	public boolean isColor(String text) {
-		String text2 = text;
-		if(text.startsWith("&")) {
-			text2 = text.replaceFirst("&", "");
-		}
-	    try {
-	  	  ChatColor.of(text2);
-	  	  return true;
-	    }catch(Exception ex) {
-	  	  return false;
-	    }
-	}
-
-
-	public List<String> color(List<String> lore) {
-		List<String> endlore = new ArrayList<String>();
-		if(lore == null) {
-			return endlore;
-		}
-		for(String text : lore) {
-			endlore.add(color(text));
-		}
-		return endlore;
-	}
-	
-	public List<String> color(List<String> lore, Player p) {
-		List<String> endlore = new ArrayList<String>();
-		if(lore == null) {
-			return endlore;
-		}
-		for(String text : lore) {
-			endlore.add(PlaceholderAPI.setPlaceholders(p, color(text)));
-		}
-		return endlore;
-	}
-
-	public String getData(ItemStack item, String data) {
-		NamespacedKey key = new NamespacedKey(plugin, data);
-		ItemMeta itemMeta = item.getItemMeta();
-		PersistentDataContainer tagContainer = itemMeta.getPersistentDataContainer();
-
-		if(tagContainer.has(key , PersistentDataType.STRING)) {
-			return tagContainer.get(key, PersistentDataType.STRING);
-		}else {
-			return null;
-		}
-	}
-
-	public void setData(ItemStack item, String data, Object value) {
-		ItemMeta im = item.getItemMeta();
-		NamespacedKey spaceKey = new NamespacedKey(plugin, data);
-		im.getPersistentDataContainer().set(spaceKey, PersistentDataType.STRING, value+"");
-		item.setItemMeta(im);
-	}
-
-
-	private String HexColor(String message) {
-	    Matcher matcher = pattern.matcher(message);
-	    while (matcher.find()) {
-	      String color = message.substring(matcher.start(), matcher.end());
-	      Boolean isColor = false;
-	      try {
-	    	  ChatColor.of(color);
-	    	  isColor = true;
-	      }catch(Exception ex) {
-	    	  
-	      }
-	      if(isColor) {
-	    	  message = message.replace(color, "" + ChatColor.of(color));
-	      }
-	    } 
-	    return message;
-	  }
-
-
-	                                    
+                                  
 	public ItemStack getHead(String texture, UUID uuid) {
 		ItemStack head = new ItemStack(Material.PLAYER_HEAD);
 	    SkullMeta headMeta = (SkullMeta) head.getItemMeta();
@@ -310,11 +191,6 @@ public class Utils {
 	    return head;
 	}
 
-	private String normalColor(String message) {
-	      message = ChatColor.translateAlternateColorCodes('&', message); 
-	    return message;
-	  }
-	
 	public ItemStack createItem(String textitem, Player p) {
 		String text = PlaceholderAPI.setPlaceholders(p, textitem);
 		ItemStack item = new ItemStack(Material.AIR);

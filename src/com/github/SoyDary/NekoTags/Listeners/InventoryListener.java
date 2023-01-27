@@ -1,3 +1,4 @@
+
 package com.github.SoyDary.NekoTags.Listeners;
 
 import java.util.List;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import com.github.SoyDary.NekoTags.NekoTags;
 import com.github.SoyDary.NekoTags.Object.Gui;
 import com.github.SoyDary.NekoTags.Object.Tag;
+import com.github.SoyDary.NekoTags.Utils.ItemUtils;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 
@@ -40,8 +42,8 @@ public class InventoryListener implements Listener{
 				return;
 			}
 			String tag = plugin.getData().getTag(p.getUniqueId().toString());
-			if(item.getItemMeta() != null && item.getItemMeta().getLocalizedName() != null) {
-				String loc = item.getItemMeta().getLocalizedName();
+			if(item.getItemMeta() != null && !ItemUtils.getData(item, "gui_item").equals("null")) {
+				String loc = ItemUtils.getData(item, "gui_item");
 				if(loc.equals("MainMenu")) {
 					Bukkit.dispatchCommand(p, "menu");
 					return;
@@ -66,19 +68,19 @@ public class InventoryListener implements Listener{
 						Tag t = plugin.getManager().getTags().getOrDefault(loc, null);
 						if(t != null && t.getCondition() != null) {
 							String conditions = PlaceholderAPI.setPlaceholders(p, t.getCondition());
-							List<String> ExecutableFunctions = plugin.getConditions().parseConditions(conditions) ? plugin.getUtils().color(t.getFunctions(), p) : plugin.getUtils().color(t.getDenyFunctions(), p);
+							List<String> ExecutableFunctions = plugin.getConditions().parseConditions(conditions) ? t.getFunctions() : t.getDenyFunctions();
 							for(String value : ExecutableFunctions) {
-								plugin.getConditions().sendFunctions(value, p);
+								plugin.getConditions().sendFunctions(PlaceholderAPI.setPlaceholders(p, value), p);
 							}
 						}
 					}
 					
 				}else {
-					if(item.getItemMeta().getLocalizedName().equalsIgnoreCase("nextpage")) {
+					if(ItemUtils.getData(item, "gui_item").equals("nextpage")) {
 						Gui gui = new Gui(p, plugin.getManager().guis.get(p).page_num+1);
 						plugin.getManager().guis.put(p, gui);
 						open = false;
-					}else if(item.getItemMeta().getLocalizedName().equalsIgnoreCase("prevpage")) {
+					}else if(ItemUtils.getData(item, "gui_item").equals("prevpage")) {
 						Gui gui = new Gui(p, plugin.getManager().guis.get(p).page_num-1);
 						plugin.getManager().guis.put(p, gui);
 						open = false;

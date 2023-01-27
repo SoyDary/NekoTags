@@ -25,6 +25,7 @@ public class ConditionsManager {
 			ArrayList<Boolean> counts = new ArrayList<Boolean>();
 			if(text.contains("||")) {
 				or = true;
+				
 			}
 			if(or) {
 				for(String t : text.split("\\|\\|")) {
@@ -128,11 +129,11 @@ public class ConditionsManager {
 				return;
 			}
 			case "[message]": {
-				p.sendMessage(value);
+				p.sendMessage(plugin.getUtils().color(value));
 				return;
 			}
 			case "[chat]": {
-				p.chat(value);
+				p.sendMessage(plugin.getUtils().color(value));
 				return;
 			}
 			case "[player]": {
@@ -140,7 +141,8 @@ public class ConditionsManager {
 				return;
 			}
 			case "[sound]": {
-				p.playSound(p.getLocation(), Sound.valueOf(value.toUpperCase()), 1f, 1f);
+				p.playSound
+				(p.getLocation(), Sound.valueOf(value.toUpperCase()), 1f, 1f);
 				return;
 			}
 			case "[closeinventory]": {
@@ -154,15 +156,19 @@ public class ConditionsManager {
 			default:
 				throw new IllegalArgumentException(ChatColor.RED+"Funcion no registrada: " + action);
 			}
+			
 		}
-		private void closeInventory(Player p) {
+		
+		private void closeInventory(Player p) {		
+			
 			Bukkit.getScheduler().runTaskLater(plugin, new Runnable() {
-
 				@Override
 				public void run() {
 					p.closeInventory();
 				}
 				
 			}, 2L);
+			
+			
 		}
 }

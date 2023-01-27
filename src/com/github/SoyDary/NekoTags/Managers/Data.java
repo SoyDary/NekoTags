@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -82,6 +83,10 @@ import com.github.SoyDary.NekoTags.NekoTags;
 		List<String> tags = getTags(p.getUniqueId().toString());
 		return tags.contains(tag);
 	}
+	public Boolean hasExactTag(UUID uuid, String tag) {
+		List<String> tags = getTags(uuid.toString());
+		return tags.contains(tag);
+	}
 	
 	public List<String> getTags(String uuid){
 		FileConfiguration config = getConfiguration(uuid);
@@ -90,6 +95,7 @@ import com.github.SoyDary.NekoTags.NekoTags;
 			tags = new ArrayList<String>();
 		return tags;
 	}
+	
 	public void checkCurrentTag(Player p) {  	   	
 		Bukkit.getScheduler().runTaskAsynchronously(plugin, (Runnable)new Runnable() {
             @Override

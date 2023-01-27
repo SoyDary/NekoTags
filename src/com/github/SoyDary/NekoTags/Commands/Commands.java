@@ -1,26 +1,16 @@
 package com.github.SoyDary.NekoTags.Commands;
 
-import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.List;
 
-import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import com.github.SoyDary.NekoTags.NekoTags;
 import com.github.SoyDary.NekoTags.Object.Gui;
 import com.github.SoyDary.NekoTags.Object.Tag;
-
-import net.luckperms.api.LuckPerms;
-import net.luckperms.api.model.user.User;
-import net.luckperms.api.node.matcher.NodeMatcher;
-import net.luckperms.api.node.types.PermissionNode;
 
 public class Commands implements CommandExecutor {
 	NekoTags plugin;
@@ -48,9 +38,6 @@ public class Commands implements CommandExecutor {
 			case "list": {
 				return listTags(s, a);
 			}
-			case "--migrar": {
-				return migrar(s);
-			}
 			}
 		}	
 		if(s instanceof Player) {
@@ -68,7 +55,8 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		if(a.length == 3) {
-			Player op = Bukkit.getPlayer(a[1]);
+			
+			OfflinePlayer op = plugin.getUtils().getUser(a[1]);
 			if(op == null) {
 				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fJugador inválido!"));
 				return true;
@@ -78,7 +66,7 @@ public class Commands implements CommandExecutor {
 				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fEtiqueta inválida!"));
 				return true;
 			}
-			if(!plugin.getData().hasTag(op, tag.getKey())) {
+			if(!plugin.getData().hasExactTag(op.getUniqueId(), tag.getKey())) {
 				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fOtorgada la etiqueta &f"+tag.getTag()+"&f a &n"+op.getName()+"&f."));
 				plugin.getData().addTag(op.getUniqueId().toString(), tag.getKey());
 				
@@ -87,7 +75,7 @@ public class Commands implements CommandExecutor {
 			}
 			return true;		
 		} else {
-			s.sendMessage(plugin.prefix+" &fUso: /tags give <usuario> <tag>");
+			s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fUso: /tags give <usuario> <tag>"));
 		}
 		return true;
 	}
@@ -97,7 +85,7 @@ public class Commands implements CommandExecutor {
 			return true;
 		}
 		if(a.length == 3) {
-			Player op = Bukkit.getPlayer(a[1]);
+			OfflinePlayer op = plugin.getUtils().getUser(a[1]);
 			if(op == null) {
 				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fJugador inválido!"));
 				return true;
@@ -107,7 +95,7 @@ public class Commands implements CommandExecutor {
 				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fEtiqueta inválida!"));
 				return true;
 			}
-			if(plugin.getData().hasTag(op, tag.getKey())) {
+			if(plugin.getData().hasExactTag(op.getUniqueId(), tag.getKey())) {
 				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fEliminada la etiqueta &f"+tag.getTag()+"&f a &n"+op.getName()+"&f."));
 				plugin.getData().removeTag(op.getUniqueId().toString(), tag.getKey());
 				
@@ -116,7 +104,7 @@ public class Commands implements CommandExecutor {
 			}
 			return true;		
 		} else {
-			s.sendMessage(plugin.prefix+" &fUso: /tags remove <usuario> <tag>");
+			s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fUso: /tags remove <usuario> <tag>"));
 		}
 		return true;
 	}
@@ -128,15 +116,20 @@ public class Commands implements CommandExecutor {
 		if(a.length < 2) {
 			s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fIntroduce el nombre de un jugador."));
 		} else {
-			Player op = Bukkit.getPlayer(a[1]);
+			OfflinePlayer op = plugin.getUtils().getUser(a[1]);
 			if(op == null) {
 				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fJugador inválido!"));
 				return true;
 			}
-			s.sendMessage("§3Etiquetas de "+op.getName()+":");
-			for(String t : plugin.getData().getTags(op.getUniqueId().toString())) {
+			List<String> tags = plugin.getData().getTags(op.getUniqueId().toString());
+			if(tags.isEmpty()) {
+				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &f"+op.getName()+" &7no tiene etiquetas."));
+				return true;
+			}
+			s.sendMessage(plugin.getUtils().color("&3Etiquetas de "+op.getName()+":"));
+			for(String t : tags) {
 				Tag tag = plugin.getManager().getTags().get(t);
-				s.sendMessage(plugin.getUtils().color("§7"+tag.getKey()+": §f"+tag.getTag()));		
+				s.sendMessage(plugin.getUtils().color("&7"+tag.getKey()+": &f"+tag.getTag()));		
 			}
 		}
 		return true;
@@ -169,48 +162,5 @@ public class Commands implements CommandExecutor {
 			}
 		} 
 		return true;
-	}
-	private boolean migrar(CommandSender s) {
-		if(!s.hasPermission("nekotags.admin")) {
-			s.sendMessage("§cError: Permisos insuficientes.");
-			return true;
-		}
-		File dataFile = new File(plugin.getDataFolder() + File.separator+ "data.yml");
-		if(!dataFile.exists()) return true;
-		Bukkit.getScheduler().runTaskAsynchronously(plugin, (Runnable)new Runnable() {
-            @Override
-            public void run() {
-        		LuckPerms luckperms =(LuckPerms)plugin.getServer().getServicesManager().load(LuckPerms.class);
-        		Map<Tag, Integer> tags = new HashMap<Tag, Integer>();
-        		s.sendMessage("§3§nTransfiriendo etiquetas...");
-        		for(Tag tag : plugin.getManager().getTags().values()) {
-        			int u = 0;
-        			for(UUID uuid : luckperms.getUserManager().searchAll(NodeMatcher.key("nekotags.tag."+tag.getKey())).join().keySet()) {
-        				User user = luckperms.getUserManager().loadUser(uuid).join();
-        				user.data().remove(PermissionNode.builder("nekotags.tag."+tag.getKey()).build());
-        				luckperms.getUserManager().saveUser(user);
-        				plugin.getData().addTag(uuid.toString(), tag.getKey());
-        				u++;
-        			}
-        			if(u > 0) tags.put(tag, u);
-        		}
-        		if(!tags.isEmpty()) {
-        			for(Tag tag : tags.keySet()) {
-        				if(tags.get(tag) == 0) continue;
-        				s.sendMessage(plugin.getUtils().color("Transferida la tag "+tag.getTag()+" §fa §b"+tags.get(tag)+" §fusuario"+(tags.get(tag) > 1 ? "s" : "")+"."));
-        			}
-        			FileConfiguration data = (FileConfiguration)YamlConfiguration.loadConfiguration(dataFile);
-        			for(String uuid : data.getConfigurationSection("").getKeys(false)) {	
-        				plugin.getData().setTag(uuid, data.getString(uuid));
-        			}
-        			dataFile.delete();
-        			
-        		} else {
-        			s.sendMessage("§cNo se encontraron tags para ser transferidas.");
-        		}	
-            }
-        });	
-	
-	    return true;		
 	}
 }

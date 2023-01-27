@@ -2,9 +2,11 @@ package com.github.SoyDary.NekoTags;
 
 import java.io.File;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.earth2me.essentials.Essentials;
 import com.github.SoyDary.NekoTags.Commands.CommandCompleter;
 import com.github.SoyDary.NekoTags.Commands.Commands;
 import com.github.SoyDary.NekoTags.Listeners.InventoryListener;
@@ -21,6 +23,7 @@ public class NekoTags extends JavaPlugin{
 	Commands commands;
 	Data data;
 	ConditionsManager conditionsmanager;
+	public Essentials essentials;
 	public String prefix = "&#a64dff[&#ffb3ffNeko&#ffe699Tags&#a64dff]";
 	
 	public void onEnable() {
@@ -29,6 +32,8 @@ public class NekoTags extends JavaPlugin{
 		getServer().getPluginCommand("NekoTags").setExecutor(this.commands);
 		getServer().getPluginCommand("NekoTags").setTabCompleter(new CommandCompleter(this));
 		getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
+		if(Bukkit.getPluginManager().isPluginEnabled("Essentials")) this.essentials = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
+
 		new PapiTags(this).register();
 	}
 	
