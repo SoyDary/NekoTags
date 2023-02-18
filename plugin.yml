@@ -3,7 +3,7 @@ main: com.github.SoyDary.NekoTags.NekoTags
 depend: [PlaceholderAPI]
 softdepend: [Essentials]
 author: Dariela
-version: 1.5.0
+version: 1.5.1
 api-version: 1.17
 commands:
    NekoTags:

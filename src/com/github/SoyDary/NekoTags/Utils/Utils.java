@@ -72,8 +72,6 @@ public class Utils {
 		
 	}
 	
-	
-	
 	public String fixColors(String text) {
 		return 	text = text
 					.replaceAll("&A", "&a")
@@ -163,11 +161,7 @@ public class Utils {
 			return false;
 		}
 	}
-
-	public String addChar(String str, String ch, int position) {
-	    return str.substring(0, position) + ch + str.substring(position);
-	}
-                                  
+                          
 	public ItemStack getHead(String texture, UUID uuid) {
 		ItemStack head = new ItemStack(Material.PLAYER_HEAD);
 	    SkullMeta headMeta = (SkullMeta) head.getItemMeta();

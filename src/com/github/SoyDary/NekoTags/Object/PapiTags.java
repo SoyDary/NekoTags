@@ -4,6 +4,7 @@ package com.github.SoyDary.NekoTags.Object;
 import java.util.HashMap;
 import org.bukkit.entity.Player;
 import com.github.SoyDary.NekoTags.NekoTags;
+
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 
 public class PapiTags extends PlaceholderExpansion {
@@ -79,13 +80,7 @@ public class PapiTags extends PlaceholderExpansion {
     						}
     						
     					}else {
-    						/*
-    						boolean color = false;
-    						if(id.split("_").length == 3) {
-    							color = Boolean.valueOf(id.split("_")[2].equalsIgnoreCase("color"));
-    						}
-    						*/
-    						return t.getTag();
+    						return t.getTag(p);
     					}
     					
     				}
@@ -135,7 +130,7 @@ public class PapiTags extends PlaceholderExpansion {
 						}
 						
 					}else {
-						return t.getTag();
+						return t.getTag(p);
 					}
 					
 				}

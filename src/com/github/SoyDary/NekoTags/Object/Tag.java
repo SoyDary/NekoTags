@@ -114,8 +114,8 @@ public class Tag {
 		return description;
 	}
 	
-	public String getTag() {
-		return tag;
+	public String getTag(Player p) {
+		return PlaceholderAPI.setPlaceholders(p, tag);
 	}
 	/*
 	public String getTag(Boolean color) {

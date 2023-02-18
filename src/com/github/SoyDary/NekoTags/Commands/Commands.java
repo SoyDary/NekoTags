@@ -54,6 +54,7 @@ public class Commands implements CommandExecutor {
 			s.sendMessage("§cError: Permisos insuficientes.");
 			return true;
 		}
+		Player p = s instanceof Player ? (Player)s : null;
 		if(a.length == 3) {
 			
 			OfflinePlayer op = plugin.getUtils().getUser(a[1]);
@@ -67,7 +68,7 @@ public class Commands implements CommandExecutor {
 				return true;
 			}
 			if(!plugin.getData().hasExactTag(op.getUniqueId(), tag.getKey())) {
-				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fOtorgada la etiqueta &f"+tag.getTag()+"&f a &n"+op.getName()+"&f."));
+				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fOtorgada la etiqueta &f"+tag.getTag(p)+"&f a &n"+op.getName()+"&f."));
 				plugin.getData().addTag(op.getUniqueId().toString(), tag.getKey());
 				
 			} else {
@@ -84,6 +85,7 @@ public class Commands implements CommandExecutor {
 			s.sendMessage("§cError: Permisos insuficientes.");
 			return true;
 		}
+		Player p = s instanceof Player ? (Player)s : null;
 		if(a.length == 3) {
 			OfflinePlayer op = plugin.getUtils().getUser(a[1]);
 			if(op == null) {
@@ -96,7 +98,7 @@ public class Commands implements CommandExecutor {
 				return true;
 			}
 			if(plugin.getData().hasExactTag(op.getUniqueId(), tag.getKey())) {
-				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fEliminada la etiqueta &f"+tag.getTag()+"&f a &n"+op.getName()+"&f."));
+				s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fEliminada la etiqueta &f"+tag.getTag(p)+"&f a &n"+op.getName()+"&f."));
 				plugin.getData().removeTag(op.getUniqueId().toString(), tag.getKey());
 				
 			} else {
@@ -113,6 +115,7 @@ public class Commands implements CommandExecutor {
 			s.sendMessage("§cError: Permisos insuficientes.");
 			return true;
 		}
+		Player p = s instanceof Player ? (Player)s : null;
 		if(a.length < 2) {
 			s.sendMessage(plugin.getUtils().color(plugin.prefix+" &fIntroduce el nombre de un jugador."));
 		} else {
@@ -129,7 +132,7 @@ public class Commands implements CommandExecutor {
 			s.sendMessage(plugin.getUtils().color("&3Etiquetas de "+op.getName()+":"));
 			for(String t : tags) {
 				Tag tag = plugin.getManager().getTags().get(t);
-				s.sendMessage(plugin.getUtils().color("&7"+tag.getKey()+": &f"+tag.getTag()));		
+				s.sendMessage(plugin.getUtils().color("&7"+tag.getKey()+": &f"+tag.getTag(p)));		
 			}
 		}
 		return true;
@@ -155,7 +158,7 @@ public class Commands implements CommandExecutor {
 		Tag tag = plugin.getManager().getTags().get(a[1]);
 		if(tag != null) {
 			if(plugin.getData().hasTag(p, tag.getKey())) {
-				p.sendMessage(plugin.getUtils().color("Etiqueta seleccionada: "+tag.getTag()));
+				p.sendMessage(plugin.getUtils().color("Etiqueta seleccionada: "+tag.getTag(p)));
 				plugin.getData().setTag(p.getUniqueId().toString(), tag.getKey());
 			} else {
 				p.sendMessage(plugin.getUtils().color("&fNo tienes permiso de usar esta etiqueta."));

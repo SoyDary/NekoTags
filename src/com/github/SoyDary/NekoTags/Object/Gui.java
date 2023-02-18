@@ -91,7 +91,7 @@ public class Gui implements InventoryHolder {
 				ItemStack item = tag.createItem(p, selected);
 				ItemUtils.setData(item, "gui_item", key);
 				ItemMeta meta = item.getItemMeta();
-				meta.displayName(plugin.getUtils().color(plugin.getConfig().getString("GUI.item_name").replaceAll("%tag_name%", name).replaceAll("%tag%", tag.hasMultiTags() ? tag.getTags().get(0) : tag.getTag())));
+				meta.displayName(plugin.getUtils().color(plugin.getConfig().getString("GUI.item_name").replaceAll("%tag_name%", name).replaceAll("%tag%", tag.hasMultiTags() ? tag.getTags().get(0) : tag.getTag(p))));
 				List<Component> lore = new ArrayList<Component>();
 				List<String> defaultLore = plugin.getConfig().getStringList("GUI.default_lore");
 				for(String text : defaultLore) {
@@ -167,7 +167,7 @@ public class Gui implements InventoryHolder {
 					return;
 				}
 				for(String text : plugin.getConfig().getStringList("GUI.info_item.lore")) {
-					lore.add(plugin.getUtils().color(PlaceholderAPI.setPlaceholders(p, text.replaceAll("%tag%", t.hasMultiTags() ? t.getTags().get(0) : t.getTag()).replaceAll("%tag_name%", t.getName()))));
+					lore.add(plugin.getUtils().color(PlaceholderAPI.setPlaceholders(p, text.replaceAll("%tag%", t.hasMultiTags() ? t.getTags().get(0) : t.getTag(p)).replaceAll("%tag_name%", t.getName()))));
 				}
 			}else {
 				for(String text : plugin.getConfig().getStringList("GUI.info_item.no_tag_lore")) {
